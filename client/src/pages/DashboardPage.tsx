@@ -4,12 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Zap, LogOut, Loader2, User, Copy, Check } from "lucide-react";
+import { getDisplayName, getProfilePicture } from "applesauce-core/helpers/profile";
 import { getCurrentUser, logout, type NostrUser } from "@/services/nostr";
+import { useProfile } from "@/hooks/use-profile";
 
 export default function DashboardPage() {
   const [, navigate] = useLocation();
   const [user, setUser] = useState<NostrUser | null>(null);
   const [copied, setCopied] = useState(false);
+  const profile = useProfile(user?.pubkey);
+  const displayName = getDisplayName(profile);
+  const picture = getProfilePicture(profile);
 
   useEffect(() => {
     const u = getCurrentUser();
@@ -68,8 +73,8 @@ export default function DashboardPage() {
             <CardContent className="pt-6">
               <div className="flex flex-wrap items-start gap-4">
                 <Avatar className="w-14 h-14" data-testid="img-user-avatar">
-                  {user.picture ? (
-                    <AvatarImage src={user.picture} alt={user.displayName || "Profile"} />
+                  {picture ? (
+                    <AvatarImage src={picture} alt={displayName || "Profile"} />
                   ) : null}
                   <AvatarFallback>
                     <User className="w-6 h-6 text-muted-foreground" />
@@ -77,11 +82,11 @@ export default function DashboardPage() {
                 </Avatar>
                 <div className="flex flex-col gap-1 min-w-0 flex-1">
                   <h2 className="text-lg font-semibold truncate" data-testid="text-display-name">
-                    {user.displayName || "Anonymous"}
+                    {displayName || "Anonymous"}
                   </h2>
-                  {user.nip05 && (
+                  {profile?.nip05 && (
                     <p className="text-sm text-muted-foreground truncate" data-testid="text-nip05">
-                      {user.nip05}
+                      {profile.nip05}
                     </p>
                   )}
                   <div className="flex flex-wrap items-center gap-1">
@@ -101,9 +106,9 @@ export default function DashboardPage() {
                       )}
                     </Button>
                   </div>
-                  {user.about && (
+                  {profile?.about && (
                     <p className="text-sm text-muted-foreground mt-1" data-testid="text-about">
-                      {user.about}
+                      {profile.about}
                     </p>
                   )}
                 </div>
