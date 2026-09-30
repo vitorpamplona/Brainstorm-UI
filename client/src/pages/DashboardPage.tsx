@@ -41,7 +41,7 @@ export default function DashboardPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen w-full bg-background" data-testid="page-dashboard">
+    <div className="min-h-dvh w-full bg-background" data-testid="page-dashboard">
       <header className="border-b">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">

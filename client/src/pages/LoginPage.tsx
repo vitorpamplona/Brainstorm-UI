@@ -24,7 +24,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background" data-testid="page-login">
+    <div className="min-h-dvh w-full flex items-center justify-center bg-background" data-testid="page-login">
       <div className="w-full max-w-sm mx-4">
         <div className="flex flex-col items-center gap-6">
           <div className="flex flex-wrap items-center gap-3">
